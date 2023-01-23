@@ -214,5 +214,6 @@ with col2:
 
 st.markdown(
     "**TFM desarrollado por Estrella Conde Raposo. "
-    + "Código disponible en [GitHub](https://github.com/pmagana-ugr/dashboard-quejigal)**"
+    + "Código disponible en [GitHub]"
+    + "(https://github.com/pmagana-ugr/dashboard-quejigal)**"
 )
