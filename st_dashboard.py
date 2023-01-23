@@ -47,7 +47,7 @@ for point in df_puntos.itertuples():
     folium.Marker(
         location=[point.latitude, point.longitude],
         popup=f"Visita {point.id_visita}<br/><br/>"
-        + f"Estado de conservación: <font color='{color_estado}'>{estado_texto}</font>",
+        + f"<b>Estado de conservación:</b> <font color='{color_estado}'>{estado_texto}</font>",
     ).add_to(m)
 
 st.title("Quejigares del Parque Natural Sierra de Huétor")
@@ -96,7 +96,10 @@ with col2:
             c = (
                 alt.Chart(df_densidad_relat_view)
                 .mark_bar()
-                .encode(x=alt.X("cod_especie", sort="-y"), y="densidad_relativa")
+                .encode(
+                    x=alt.X("cod_especie", sort="-y", title=""),
+                    y=alt.Y("densidad_relativa", title="%"),
+                )
             )
 
             st.altair_chart(c, use_container_width=True)
@@ -109,7 +112,10 @@ with col2:
             c = (
                 alt.Chart(df_rango_abundancia_view)
                 .mark_bar()
-                .encode(x=alt.X("nombre_especie", sort="-y"), y="abundancia_relativa")
+                .encode(
+                    x=alt.X("nombre_especie", sort="-y", title=""),
+                    y=alt.Y("abundancia_relativa", title="%"),
+                )
             )
 
             st.altair_chart(c, use_container_width=True)
@@ -120,7 +126,10 @@ with col2:
             c = (
                 alt.Chart(df_clases_altura_view)
                 .mark_bar()
-                .encode(x=alt.X("altura_cm", bin=True), y="count()")
+                .encode(
+                    x=alt.X("altura_cm", bin=True, title="cm"),
+                    y=alt.Y("count()", title="Nº individuos"),
+                )
             )
 
             st.altair_chart(c, use_container_width=True)
@@ -131,7 +140,10 @@ with col2:
             c = (
                 alt.Chart(df_clases_diametro_pecho_view)
                 .mark_bar()
-                .encode(x=alt.X("DBH_cm", bin=True), y="count()")
+                .encode(
+                    x=alt.X("DBH_cm", bin=True, title="cm"),
+                    y=alt.Y("count()", title="Nº individuos"),
+                )
             )
 
             st.altair_chart(c, use_container_width=True)
@@ -144,7 +156,14 @@ with col2:
             )
             df_ndvi_view.columns = ["Año", "NDVI"]
 
-            c = alt.Chart(df_ndvi_view).mark_line().encode(x="Año", y="NDVI")
+            c = (
+                alt.Chart(df_ndvi_view)
+                .mark_line()
+                .encode(
+                    x=alt.X("Año", title=""),
+                    y=alt.Y("NDVI", title=""),
+                )
+            )
 
             st.altair_chart(c, use_container_width=True)
 
@@ -154,13 +173,28 @@ with col2:
             c = (
                 alt.Chart(df_regeneracion_view)
                 .mark_bar()
-                .encode(x=alt.X("cod_especie", sort="-y"), y="N_plantulas")
+                .encode(
+                    x=alt.X("cod_especie", sort="-y", title=""),
+                    y=alt.Y("N_plantulas", title="Nº plántulas"),
+                )
             )
 
             st.altair_chart(c, use_container_width=True)
 
         with tabla_datos:
             df_data_view = df_data[df_data.id_visita == punto].T
+            df_data_view = df_data_view[1:]
+
             df_data_view.columns = ["Valor"]
+            df_data_view.index = [
+                "Estado de conservación local",
+                "Índice de Shannon",
+                "Movimiento de la capa superficial del suelo (GRT)",
+                "Pedregosidad superficial (GRT)",
+                "Presencia de regueros (GRT)",
+                "Presencia de pedestales de erosión (GRT)",
+                "Presencia de una incipiente red de drenaje para el transporte de agua y sedimentos (GRT)",
+                "Presencia de cárcavas y barrancos (GRT)",
+            ]
 
             st.table(df_data_view)
