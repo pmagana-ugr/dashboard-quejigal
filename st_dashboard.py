@@ -22,7 +22,7 @@ for point in df_puntos.itertuples():
         popup=f"Visita {point.id_visita}",
     ).add_to(m)
 
-st.title("Caracterización de los quejigares del Parque Natural de la Sierra de Huétor")
+st.title("Quejigares del Parque Natural de la Sierra de Huétor")
 
 col1, col2 = st.columns([2, 1])
 
