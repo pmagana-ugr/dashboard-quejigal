@@ -57,7 +57,7 @@ col1, col2 = st.columns([2, 1])
 
 with col1:
     folium.LayerControl().add_to(m)
-    st_data = st_folium(m, height=600, width=1400)
+    st_data = st_folium(m, height=550, width=1400)
 
 with col2:
     last_obj = st_data["last_object_clicked"]
@@ -210,7 +210,7 @@ with col2:
 
             st.table(df_data_view)
 
-st.subheader("TFM desarrollado por Estrella Conde Raposo")
-st.subheader(
-    "Código disponible en <a href='https://github.com/pmagana-ugr/dashboard-quejigal'>GitHub</a>"
+st.markdown(
+    "TFM desarrollado por Estrella Conde Raposo. "
+    + "Código disponible en [GitHub](https://github.com/pmagana-ugr/dashboard-quejigal)"
 )
