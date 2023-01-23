@@ -161,7 +161,16 @@ with col2:
                 .mark_line()
                 .encode(
                     x=alt.X("Año", title=""),
-                    y=alt.Y("NDVI", title=""),
+                    y=alt.Y(
+                        "NDVI",
+                        title="",
+                        scale=alt.Scale(
+                            domain=[
+                                df_ndvi_view["NDVI"].min(),
+                                df_ndvi_view["NDVI"].max(),
+                            ]
+                        ),
+                    ),
                 )
             )
 
