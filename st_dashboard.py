@@ -209,8 +209,10 @@ with col2:
             ]
 
             st.table(df_data_view)
+    else:
+        st.markdown("Pulse en un punto para ver su información")
 
 st.markdown(
-    "TFM desarrollado por Estrella Conde Raposo. "
-    + "Código disponible en [GitHub](https://github.com/pmagana-ugr/dashboard-quejigal)"
+    "**TFM desarrollado por Estrella Conde Raposo. "
+    + "Código disponible en [GitHub](https://github.com/pmagana-ugr/dashboard-quejigal)**"
 )
