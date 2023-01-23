@@ -25,19 +25,29 @@ df_data = pd.read_csv(
 
 m = folium.Map(location=[37.28, -3.4], zoom_start=12, tiles="Stamen Terrain")
 
-fg_limite = folium.FeatureGroup(name="Límite")
-fg_limite.add_child(folium.features.GeoJson("./data/shapes/limite_sh.geojson"))
-
-fg_densidad = folium.FeatureGroup(name="Densidad quejigos")
-fg_densidad.add_child(
-    folium.features.GeoJson("./data/shapes/densidad_quejigos.geojson")
-)
-
-
 for point in df_puntos.itertuples():
+    estado = df_data[df_data.id_visita == point.id_visita][
+        "estado_conservacion_local"
+    ].item()
+
+    estado_texto = ""
+    color_estado = ""
+    if estado < 13:
+        estado_texto = "Desforable-malo"
+        color_estado = "red"
+    elif 13 <= estado <= 26:
+        estado_texto = "Desfarable-inadecuado"
+        color_estado = "orange"
+    elif 26 < estado < 38:
+        estado_texto = "Favorable"
+        color_estado = "green"
+    else:
+        estado_texto = "-"
+
     folium.Marker(
         location=[point.latitude, point.longitude],
-        popup=f"Visita {point.id_visita}",
+        popup=f"Visita {point.id_visita}<br/><br/>"
+        + f"Estado de conservación: <font color='{color_estado}'>{estado_texto}</font>",
     ).add_to(m)
 
 st.title("Quejigares del Parque Natural Sierra de Huétor")
@@ -46,7 +56,7 @@ col1, col2 = st.columns([2, 1])
 
 with col1:
     folium.LayerControl().add_to(m)
-    st_data = st_folium(m, height=600, width=1400, feature_group_to_add=fg_limite)
+    st_data = st_folium(m, height=600, width=1400)
 
 with col2:
     last_obj = st_data["last_object_clicked"]
