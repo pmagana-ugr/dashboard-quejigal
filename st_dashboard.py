@@ -47,7 +47,8 @@ for point in df_puntos.itertuples():
     folium.Marker(
         location=[point.latitude, point.longitude],
         popup=f"Visita {point.id_visita}<br/><br/>"
-        + f"<b>Estado de conservación:</b> <font color='{color_estado}'>{estado_texto}</font>",
+        + f"<b>Estado de conservación:</b> <font color='{color_estado}'>"
+        + f"{estado_texto}</font>",
     ).add_to(m)
 
 st.title("Quejigares del Parque Natural Sierra de Huétor")
@@ -202,8 +203,14 @@ with col2:
                 "Pedregosidad superficial (GRT)",
                 "Presencia de regueros (GRT)",
                 "Presencia de pedestales de erosión (GRT)",
-                "Presencia de una incipiente red de drenaje para el transporte de agua y sedimentos (GRT)",
+                "Presencia de una incipiente red de drenaje para el transporte de "
+                + "agua y sedimentos (GRT)",
                 "Presencia de cárcavas y barrancos (GRT)",
             ]
 
             st.table(df_data_view)
+
+st.subheader("TFM desarrollado por Estrella Conde Raposo")
+st.subheader(
+    "Código disponible en <a href='https://github.com/pmagana-ugr/dashboard-quejigal'>GitHub</a>"
+)
